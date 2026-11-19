@@ -806,18 +806,7 @@ body.show-notes #notes { display: block; }
 <p class="slice" style="font-size:44px; font-weight:700; background:#C9733B; color:#EBE2D2; padding:12px 28px; border-radius:999px;">！</p>
 </div>
 <p class="lead rise" style="--i:3">每一片就叫一個 <b>token</b>。AI 不是整根吞下去，而是切成小片處理</p>
-<p class="small">示意：實際怎麼切，每個 AI 模型都不太一樣</p>
-
-</section>
-<section id="cnEn">
-<p class="eyebrow">TOKEN</p>
-<h2>同一個意思，中文、英文切法不一樣</h2>
-<div style="display:flex; flex-direction:column; gap:32px;">
-<div class="row rise" style="--i:1; gap:32px;"><p class="small" style="width:120px;">中文</p><div class="slices"><p class="slice">烤</p><p class="slice alt">香腸</p></div></div>
-<div class="row rise" style="--i:2; gap:32px;"><p class="small" style="width:120px;">英文</p><div class="slices"><p class="slice">grill</p><p class="slice alt">ed</p><p class="slice">sau</p><p class="slice alt">sage</p></div></div>
-</div>
-<p class="lead">不用背數字，只要記得：<br><b>字越多、檔案越大，切出來的片就越多</b></p>
-<p class="small">示意：實際怎麼切，每個 AI 模型都不同</p>
+<p class="small">示意：中文常常一兩個字一片，英文一個單字可能切成好幾片。實際怎麼切，每個模型都不一樣</p>
 
 </section>
 <section id="tokenCost">
@@ -879,26 +868,6 @@ body.show-notes #notes { display: block; }
 <div class="card rise" style="--i:3"><p class="tag">桌面版</p><h3>官網下載安裝</h3><p class="body">Mac、Windows 都有，今天示範用這個</p></div>
 </div>
 <p class="lead">三個都用同一個帳號登入，對話紀錄會同步</p>
-
-</section>
-<section id="versions">
-<p class="eyebrow">WEB · APP · DESKTOP</p>
-<h2>同一個 Claude，差在碰不碰得到你的電腦</h2>
-<div class="cards">
-<div class="card rise" style="--i:1; align-items:center;">
-<svg aria-label="瀏覽器" width="200" height="140" viewBox="0 0 200 140"><rect x="4" y="4" width="192" height="132" rx="12" fill="#FAF6EE" stroke="#1C1C1C" stroke-width="4"/><rect x="4" y="4" width="192" height="28" rx="12" fill="#1C1C1C"/><circle cx="22" cy="18" r="5" fill="#D7301F"/><circle cx="38" cy="18" r="5" fill="#F2B705"/><circle cx="54" cy="18" r="5" fill="#2E5E9E"/><rect x="24" y="50" width="100" height="14" rx="7" fill="#D7301F"/><rect x="24" y="76" width="152" height="10" rx="5" fill="#CFC5B4"/><rect x="24" y="96" width="120" height="10" rx="5" fill="#CFC5B4"/></svg>
-<h3>網頁版</h3><p class="body" style="text-align:center;">聊天、做文件都可以<br>檔案要先上傳</p>
-</div>
-<div class="card rise" style="--i:2; align-items:center;">
-<svg aria-label="手機" width="80" height="140" viewBox="0 0 80 140"><rect x="4" y="4" width="72" height="132" rx="14" fill="#1C1C1C"/><rect x="12" y="18" width="56" height="100" rx="4" fill="#F2B705"/><circle cx="40" cy="127" r="4" fill="#444444"/></svg>
-<h3>手機 App</h3><p class="body" style="text-align:center;">隨時用講的問<br>檔案要先上傳</p>
-</div>
-<div class="card good rise" style="--i:3; align-items:center;">
-<div class="row" style="gap:12px;"><svg aria-label="筆電" width="160" height="120" viewBox="0 0 160 120"><rect x="24" y="10" width="112" height="76" rx="8" fill="#1C1C1C"/><rect x="32" y="18" width="96" height="60" rx="3" fill="#F2B705"/><path d="M8 92h144l-10 16H18z" fill="#444444"/></svg><svg aria-label="資料夾" width="90" height="70" viewBox="0 0 140 110"><path d="M6 20a8 8 0 0 1 8-8h38l12 12h62a8 8 0 0 1 8 8v66a8 8 0 0 1-8 8H14a8 8 0 0 1-8-8z" fill="#2E5E9E"/><rect x="6" y="36" width="128" height="68" rx="8" fill="#F2B705"/></svg></div>
-<h3>桌面版</h3><p class="body" style="text-align:center;">多了 Code 分頁<br><b>直接讀寫你電腦的資料夾</b></p>
-</div>
-</div>
-<p class="lead">網頁版是「把東西拿給它看」，桌面版是「讓它進你的資料夾工作」</p>
 
 </section>
 <section id="whatCode">
@@ -1130,38 +1099,6 @@ body.show-notes #notes { display: block; }
 <p class="lead">MCP 不是取代 API，是疊在 API 上面、讓 AI 看得懂怎麼用的一層</p>
 
 </section>
-<section id="mcpPlug">
-<p class="eyebrow">WHY A STANDARD</p>
-<h2>為什麼需要 MCP 這個「統一插頭」？</h2>
-<div class="cards">
-<div class="card rise" style="--i:1; align-items:center;">
-<svg aria-label="沒有標準時，每個 AI 和每個工具都要各自串接，線很亂" width="466" height="240" viewBox="0 0 700 360"><g stroke="#C9733B" stroke-width="4"><path d="M100 60L600 45M100 60L600 135M100 60L600 225M100 60L600 315M100 180L600 45M100 180L600 135M100 180L600 225M100 180L600 315M100 300L600 45M100 300L600 135M100 300L600 225M100 300L600 315"/></g><g fill="#D7301F"><circle cx="100" cy="60" r="30"/><circle cx="100" cy="180" r="30"/><circle cx="100" cy="300" r="30"/></g><g fill="#F2B705"><rect x="580" y="25" width="60" height="40" rx="8"/><rect x="580" y="115" width="60" height="40" rx="8"/><rect x="580" y="205" width="60" height="40" rx="8"/><rect x="580" y="295" width="60" height="40" rx="8"/></g></svg>
-<h3>沒有標準</h3><p class="body">12 條線，每條都要各自串接</p>
-</div>
-<div class="card good rise" style="--i:2; align-items:center;">
-<svg aria-label="有了 MCP，大家都接到中間的統一插頭，線變少" width="466" height="240" viewBox="0 0 700 360"><g stroke="#C9733B" stroke-width="4"><path d="M100 60L350 180M100 180L350 180M100 300L350 180M350 180L600 45M350 180L600 135M350 180L600 225M350 180L600 315"/></g><g fill="#D7301F"><circle cx="100" cy="60" r="30"/><circle cx="100" cy="180" r="30"/><circle cx="100" cy="300" r="30"/></g><circle cx="350" cy="180" r="56" fill="#1C1C1C"/><circle cx="350" cy="180" r="30" fill="#F2B705"/><g fill="#F2B705"><rect x="580" y="25" width="60" height="40" rx="8"/><rect x="580" y="115" width="60" height="40" rx="8"/><rect x="580" y="205" width="60" height="40" rx="8"/><rect x="580" y="295" width="60" height="40" rx="8"/></g></svg>
-<h3>有了 MCP</h3><p class="body">工具做一次，所有 AI 都能接</p>
-</div>
-</div>
-<p class="lead">就像 USB-C：手機、筆電、耳機都用同一種插頭</p>
-
-</section>
-<section id="apiVsMcp">
-<p class="eyebrow">ONE TABLE</p>
-<h2>一張表分清楚：Claude API vs MCP 連接器</h2>
-<table class="rise" style="--i:2; font-size:28px;">
-<tr><th style="width:20%"></th><th style="width:40%">Claude API</th><th style="width:40%">MCP 連接器</th></tr>
-<tr><td>方向</td><td>你的程式 → 叫 Claude 做事</td><td>Claude → 去用雲端硬碟、Gmail…</td></tr>
-<tr><td>怎麼設定</td><td>工程師寫程式＋API 金鑰</td><td>在 Claude 裡點選連接、登入按「允許」</td></tr>
-<tr><td>怎麼付費</td><td>用多少付多少（另外計費）</td><td>包含在你的 Claude 方案</td></tr>
-</table>
-<div class="cards">
-<div class="card rise" style="--i:3; padding:28px 36px; gap:12px;"><p class="tag">對你來說：碰到 API 時</p><p class="body">你<b>看不到 Claude</b>。例如在官網問客服機器人，背後其實是 Claude 在回答，你用的是公司做好的產品</p></div>
-<div class="card good rise" style="--i:4; padding:28px 36px; gap:12px;"><p class="tag">對你來說：用連接器時</p><p class="body">你<b>在 Claude 裡自己下指令</b>。說「找出上個月的報價單」，它自己去雲端硬碟拿</p></div>
-</div>
-<p class="lead" style="font-size:36px;">一般人學會連接器就夠；要把 AI 放進公司官網或系統，才需要 API＋工程師</p>
-
-</section>
 <section id="mcpBenefit">
 <p class="eyebrow">情境：讓 AI 讀雲端硬碟裡的報價單，整理成一張表</p>
 <h2>同一件事，用 API 還是 MCP？對你差在哪</h2>
@@ -1342,31 +1279,6 @@ body.show-notes #notes { display: block; }
 <p class="lead">Git 是裝在電腦裡的一套免費軟體。它在資料夾裡放一本看不見的存檔簿，<br>不用網路也能存檔</p>
 
 </section>
-<section id="gitFlow">
-<p class="eyebrow">HOW GIT SAVES</p>
-<h2>存檔分兩步：先挑選，再按快門</h2>
-<div class="diagram">
-<div class="zone rise" style="--i:1">
-<svg aria-label="正在改的檔案" width="90" height="112" viewBox="0 0 100 124"><path d="M8 4h60l24 24v88a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#FAF6EE" stroke="#444444" stroke-width="5"/><rect x="18" y="48" width="56" height="9" rx="4" fill="#D7301F"/><rect x="18" y="68" width="44" height="9" rx="4" fill="#2E5E9E"/><rect x="18" y="88" width="60" height="9" rx="4" fill="#2E5E9E"/></svg>
-<h3>工作區</h3>
-<p class="small">你正在改的檔案</p>
-</div>
-<div class="connector"><p class="label">git add<br>挑選</p><x-shape kind="arrow-right" class="arrow"></x-shape></div>
-<div class="zone rise" style="--i:2">
-<svg aria-label="挑好的檔案" width="110" height="112" viewBox="0 0 110 124"><path d="M8 4h60l24 24v88a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#FAF6EE" stroke="#444444" stroke-width="5"/><circle cx="80" cy="96" r="26" fill="#2E5E9E"/><path d="M68 96l9 9 16-18" fill="none" stroke="#FAF6EE" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-<h3>暫存區</h3>
-<p class="small">挑好、準備要存的</p>
-</div>
-<div class="connector"><p class="label">git commit<br>按快門</p><x-shape kind="arrow-right" class="arrow"></x-shape></div>
-<div class="zone rise" style="--i:3" >
-<svg aria-label="相機" width="130" height="96" viewBox="0 0 150 110"><rect x="6" y="24" width="138" height="80" rx="12" fill="#1C1C1C"/><rect x="46" y="8" width="44" height="22" rx="6" fill="#1C1C1C"/><circle cx="75" cy="64" r="28" fill="#F2B705"/><circle cx="75" cy="64" r="16" fill="#D7301F"/></svg>
-<h3>存檔紀錄</h3>
-<p class="small">存進 .git，多一個存檔點</p>
-</div>
-</div>
-<p class="lead">像拍團體照：先叫要入鏡的人站好（add），再按快門（commit）。<br>每張照片都會附一句說明，例如「改成 15 秒」</p>
-
-</section>
 <section id="terminal">
 <p class="eyebrow">WHAT IS A TERMINAL</p>
 <h2>終端機：用打字跟電腦說話的視窗</h2>
@@ -1410,19 +1322,6 @@ body.show-notes #notes { display: block; }
 <tr><td>Git／gh</td><td>第一次用 Git 會提示安裝，按安裝</td><td>要另外安裝 Git for Windows、GitHub CLI</td></tr>
 </table>
 <p class="lead" style="font-size:34px;">git、gh 這些指令，兩邊打法一樣；不確定就問 Claude「我是 Windows，要怎麼打？」</p>
-
-</section>
-<section id="gitCommands">
-<p class="eyebrow">GIT COMMANDS</p>
-<h2>如果自己打指令，會長這樣</h2>
-<div class="terminal rise" style="--i:1">
-<div class="cmdrow"><p class="cmd">git init</p><p class="say">開一本存檔簿（只有第一次要做）</p></div>
-<div class="cmdrow"><p class="cmd">git add .</p><p class="say">把改過的檔案全部挑進來</p></div>
-<div class="cmdrow"><p class="cmd">git commit -m "改成15秒"</p><p class="say">按快門存檔，附一句說明</p></div>
-<div class="cmdrow"><p class="cmd">git log</p><p class="say">翻看所有存檔紀錄</p></div>
-<div class="cmdrow"><p class="cmd">git push</p><p class="say">把存檔上傳到 GitHub</p></div>
-</div>
-<p class="prompt rise" style="--i:2; font-size:32px; padding:32px 44px;">不用背。跟 Claude 說：「幫我存一個版本，說明寫『改成 15 秒』」，它會替你打這些指令</p>
 
 </section>
 <section id="gitUndo">
@@ -1658,63 +1557,6 @@ body.show-notes #notes { display: block; }
 <p class="lead">不用打任何指令，全部在瀏覽器裡完成</p>
 
 </section>
-<section id="deployStep1">
-<p class="eyebrow">STEP 1 · NEW REPOSITORY</p>
-<h2>第 1 步：建一個倉庫</h2>
-<div class="row" style="gap:56px; align-items:flex-start;">
-<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
-<p class="small">示意畫面：github.com → 右上角 + → New repository</p>
-<p style="font-size:28px; font-weight:700;">Repository name</p>
-<p style="font-size:32px; border:2px solid #D7301F; border-radius:10px; padding:10px 18px;">sausage-game</p>
-<div class="row" style="gap:20px;"><div style="width:32px; height:32px; border-radius:50%; background:#D7301F;"></div><p style="font-size:28px;"><b>Public</b>　任何人都看得到</p></div>
-<div class="row" style="gap:20px;"><div style="width:32px; height:32px; border-radius:50%; border:3px solid #9A948A;"></div><p style="font-size:28px; color:#444444;">Private　只有自己看得到</p></div>
-<p style="align-self:flex-start; font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:12px 28px; border-radius:10px;">Create repository</p>
-</div>
-<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
-<div class="card"><p class="tag">名稱</p><p class="body">用英文小寫和「-」，它會變成網址的一部分</p></div>
-<div class="card"><p class="tag">選 Public</p><p class="body">免費帳號要公開倉庫，才能用 Pages</p></div>
-</div>
-</div>
-
-</section>
-<section id="deployStep2">
-<p class="eyebrow">STEP 2 · UPLOAD</p>
-<h2>第 2 步：把 index.html 拖進去</h2>
-<div class="row" style="gap:56px; align-items:flex-start;">
-<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
-<p class="small">示意畫面：倉庫頁 → Add file → Upload files（空倉庫點 uploading an existing file）</p>
-<div style="border:4px dashed #2E5E9E; border-radius:16px; height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
-<svg aria-label="檔案" width="64" height="80" viewBox="0 0 100 124"><path d="M8 4h60l24 24v88a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#FAF6EE" stroke="#444444" stroke-width="6"/><path d="M48 96V52M30 70l18-18 18 18" fill="none" stroke="#D7301F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-<p style="font-size:30px;">把檔案拖到這裡</p>
-</div>
-<p style="font-size:28px; border:2px solid #CFC5B4; border-radius:10px; padding:10px 18px; color:#444444;">說明：上傳烤香腸遊戲</p>
-<p style="align-self:flex-start; font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:12px 28px; border-radius:10px;">Commit changes</p>
-</div>
-<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
-<div class="card"><p class="tag">檔名</p><p class="body">首頁一定要叫 index.html</p></div>
-<div class="card"><p class="tag">Commit changes</p><p class="body">就是前面學的「存檔」，這裡在網站上幫你做</p></div>
-</div>
-</div>
-
-</section>
-<section id="deployStep3">
-<p class="eyebrow">STEP 3 · PAGES</p>
-<h2>第 3 步：打開 Pages，拿到網址</h2>
-<div class="row" style="gap:56px; align-items:flex-start;">
-<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
-<p class="small">示意畫面：倉庫的 Settings → 左邊選單 Pages</p>
-<p style="font-size:28px; font-weight:700;">Build and deployment</p>
-<p style="font-size:28px;">Source：<b>Deploy from a branch</b></p>
-<div class="row" style="gap:16px;"><p style="font-size:28px; border:2px solid #D7301F; border-radius:10px; padding:8px 18px;">main</p><p style="font-size:28px; border:2px solid #CFC5B4; border-radius:10px; padding:8px 18px;">/ (root)</p><p style="font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:8px 24px; border-radius:10px;">Save</p></div>
-<p style="font-size:26px; background:#E6F4EA; color:#1E5631; border-radius:10px; padding:14px 18px;">Your site is live at https://你的帳號.github.io/sausage-game/</p>
-</div>
-<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
-<div class="card"><p class="tag">等一兩分鐘</p><p class="body">剛開好可能還打不開，不是壞掉</p></div>
-<div class="card"><p class="tag">之後更新</p><p class="body">再上傳新版、Commit，網址內容就跟著變</p></div>
-</div>
-</div>
-
-</section>
 <section id="steps">
 <p class="eyebrow">THE AI WAY</p>
 <h2>或者，跟 Claude Code 講一句話</h2>
@@ -1737,17 +1579,6 @@ body.show-notes #notes { display: block; }
 <div class="card rise" style="--i:5"><p class="num">5</p><h3>等一兩分鐘</h3><p class="body">GitHub 在準備你的網址</p></div>
 <div class="card rise" style="--i:6"><p class="num">6</p><h3>拿到網址</h3><p class="body">你的帳號.github.io/倉庫名稱</p></div>
 </div>
-
-</section>
-<section id="safety">
-<p class="eyebrow">SAFETY</p>
-<h2>三條安全守則</h2>
-<div class="cards">
-<div class="card rise" style="--i:1"><p class="num">1</p><h3>密碼自己輸入</h3><p class="body">帳號密碼、驗證碼、信用卡，都不要貼給 AI</p></div>
-<div class="card rise" style="--i:2"><p class="num">2</p><h3>公開倉庫不放機密</h3><p class="body">價格、客戶名單、配方、員工資料，都不要上傳</p></div>
-<div class="card rise" style="--i:3"><p class="num">3</p><h3>看不懂就按拒絕</h3><p class="body">它要動手前會問你；不確定就拒絕，再問它「你剛剛想做什麼？」</p></div>
-</div>
-<p class="lead">AI 會犯錯，最後按「允許」的人是你</p>
 
 </section>
 <section id="kkdayCase">
@@ -1831,6 +1662,79 @@ body.show-notes #notes { display: block; }
 <p class="lead">第一次做出來不完美很正常，重點是「用講的一路改」</p>
 
 </section>
+<section id="recap" class="dark">
+<p class="eyebrow">TAKEAWAYS</p>
+<h2>今天帶走三件事</h2>
+<div class="cards">
+<div class="card rise" style="--i:1"><p class="big-num">1</p><h3>token 是 AI 的切片</h3><p class="body">也是額度：你說的、它讀的、它寫的都算</p></div>
+<div class="card rise" style="--i:2"><p class="big-num">2</p><h3>工具箱讓它更能幹</h3><p class="body">專案、Skill 記得你；連接器拿得到；排程自己開工</p></div>
+<div class="card rise" style="--i:3"><p class="big-num">3</p><h3>存檔、倉庫、展示櫃</h3><p class="body">Git 存檔、GitHub 放雲端、Pages 給大家看</p></div>
+</div>
+
+</section>
+<section id="appendix" class="dark center" data-transition="fade">
+<p class="eyebrow">APPENDIX</p>
+<h1>附錄：回家照著做</h1>
+<p class="lead">手動部署三步的畫面，和今天的名詞總表</p>
+
+</section>
+<section id="deployStep1">
+<p class="eyebrow">STEP 1 · NEW REPOSITORY</p>
+<h2>第 1 步：建一個倉庫</h2>
+<div class="row" style="gap:56px; align-items:flex-start;">
+<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
+<p class="small">示意畫面：github.com → 右上角 + → New repository</p>
+<p style="font-size:28px; font-weight:700;">Repository name</p>
+<p style="font-size:32px; border:2px solid #D7301F; border-radius:10px; padding:10px 18px;">sausage-game</p>
+<div class="row" style="gap:20px;"><div style="width:32px; height:32px; border-radius:50%; background:#D7301F;"></div><p style="font-size:28px;"><b>Public</b>　任何人都看得到</p></div>
+<div class="row" style="gap:20px;"><div style="width:32px; height:32px; border-radius:50%; border:3px solid #9A948A;"></div><p style="font-size:28px; color:#444444;">Private　只有自己看得到</p></div>
+<p style="align-self:flex-start; font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:12px 28px; border-radius:10px;">Create repository</p>
+</div>
+<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
+<div class="card"><p class="tag">名稱</p><p class="body">用英文小寫和「-」，它會變成網址的一部分</p></div>
+<div class="card"><p class="tag">選 Public</p><p class="body">免費帳號要公開倉庫，才能用 Pages</p></div>
+</div>
+</div>
+
+</section>
+<section id="deployStep2">
+<p class="eyebrow">STEP 2 · UPLOAD</p>
+<h2>第 2 步：把 index.html 拖進去</h2>
+<div class="row" style="gap:56px; align-items:flex-start;">
+<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
+<p class="small">示意畫面：倉庫頁 → Add file → Upload files（空倉庫點 uploading an existing file）</p>
+<div style="border:4px dashed #2E5E9E; border-radius:16px; height:260px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+<svg aria-label="檔案" width="64" height="80" viewBox="0 0 100 124"><path d="M8 4h60l24 24v88a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#FAF6EE" stroke="#444444" stroke-width="6"/><path d="M48 96V52M30 70l18-18 18 18" fill="none" stroke="#D7301F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<p style="font-size:30px;">把檔案拖到這裡</p>
+</div>
+<p style="font-size:28px; border:2px solid #CFC5B4; border-radius:10px; padding:10px 18px; color:#444444;">說明：上傳烤香腸遊戲</p>
+<p style="align-self:flex-start; font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:12px 28px; border-radius:10px;">Commit changes</p>
+</div>
+<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
+<div class="card"><p class="tag">檔名</p><p class="body">首頁一定要叫 index.html</p></div>
+<div class="card"><p class="tag">Commit changes</p><p class="body">就是前面學的「存檔」，這裡在網站上幫你做</p></div>
+</div>
+</div>
+
+</section>
+<section id="deployStep3">
+<p class="eyebrow">STEP 3 · PAGES</p>
+<h2>第 3 步：打開 Pages，拿到網址</h2>
+<div class="row" style="gap:56px; align-items:flex-start;">
+<div class="panel rise" style="--i:1; width:900px; display:flex; flex-direction:column; gap:22px; background:#FFFFFF;">
+<p class="small">示意畫面：倉庫的 Settings → 左邊選單 Pages</p>
+<p style="font-size:28px; font-weight:700;">Build and deployment</p>
+<p style="font-size:28px;">Source：<b>Deploy from a branch</b></p>
+<div class="row" style="gap:16px;"><p style="font-size:28px; border:2px solid #D7301F; border-radius:10px; padding:8px 18px;">main</p><p style="font-size:28px; border:2px solid #CFC5B4; border-radius:10px; padding:8px 18px;">/ (root)</p><p style="font-size:28px; font-weight:700; background:#2DA44E; color:#FFFFFF; padding:8px 24px; border-radius:10px;">Save</p></div>
+<p style="font-size:26px; background:#E6F4EA; color:#1E5631; border-radius:10px; padding:14px 18px;">Your site is live at https://你的帳號.github.io/sausage-game/</p>
+</div>
+<div class="grow rise" style="--i:2; display:flex; flex-direction:column; gap:28px;">
+<div class="card"><p class="tag">等一兩分鐘</p><p class="body">剛開好可能還打不開，不是壞掉</p></div>
+<div class="card"><p class="tag">之後更新</p><p class="body">再上傳新版、Commit，網址內容就跟著變</p></div>
+</div>
+</div>
+
+</section>
 <section id="glossary">
 <p class="eyebrow">GLOSSARY</p>
 <h2>今天的名詞，一次對照</h2>
@@ -1855,16 +1759,6 @@ body.show-notes #notes { display: block; }
 <tr><td>push／pull</td><td>上傳到 GitHub／從 GitHub 下載</td></tr>
 <tr><td>GitHub Pages</td><td>把倉庫變成大家能開的網址</td></tr>
 </table>
-</div>
-
-</section>
-<section id="recap" class="dark">
-<p class="eyebrow">TAKEAWAYS</p>
-<h2>今天帶走三件事</h2>
-<div class="cards">
-<div class="card rise" style="--i:1"><p class="big-num">1</p><h3>token 是 AI 的切片</h3><p class="body">也是額度：你說的、它讀的、它寫的都算</p></div>
-<div class="card rise" style="--i:2"><p class="big-num">2</p><h3>工具箱讓它更能幹</h3><p class="body">專案、Skill 記得你；連接器拿得到；排程自己開工</p></div>
-<div class="card rise" style="--i:3"><p class="big-num">3</p><h3>存檔、倉庫、展示櫃</h3><p class="body">Git 存檔、GitHub 放雲端、Pages 給大家看</p></div>
 </div>
 
 </section>

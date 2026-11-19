@@ -365,49 +365,69 @@ li {
   border-width: 4px;
 }
 
-/* ================= 包浩斯幾何裝飾（只放在頁邊留白，不壓到內容） ================= */
-section::before {
-  content: "";
+/* ================= 拼貼層（.cl）：大色塊、半圓、虛線弧、色條、黑白剪紙物件 =================
+   每頁第一個子元素是 <div class="cl" aria-hidden="true">，絕對定位在內容後面；
+   內容一律疊在上面，卡片是不透明的，色塊從卡片後面露出來就是拼貼感 */
+section {
+  position: relative;
+  overflow: hidden;
+}
+
+section > :not(.cl):not(aside) {
+  position: relative;
+  z-index: 2;
+}
+
+.cl {
   position: absolute;
-  left: 1800px;
-  top: 24px;
-  width: 88px;
-  height: 88px;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cl > * {
+  position: absolute;
+  box-sizing: border-box;
+}
+
+.cl .r { background: var(--ember); }
+.cl .y { background: var(--lantern); }
+.cl .b { background: var(--blue); }
+.cl .k { background: var(--coal); }
+
+.cl .o { border-radius: 50%; }
+.cl .ht { border-radius: 9999px 9999px 0 0; }
+.cl .hb { border-radius: 0 0 9999px 9999px; }
+.cl .hl { border-radius: 9999px 0 0 9999px; }
+.cl .hr { border-radius: 0 9999px 9999px 0; }
+.cl .q-br { border-radius: 0 0 100% 0; }
+.cl .q-tl { border-radius: 100% 0 0 0; }
+
+.cl .ring {
   border-radius: 50%;
-  background: var(--ember);
+  border: 6px dashed var(--coal);
+  background: none;
 }
 
-section::after {
-  content: "";
-  position: absolute;
-  left: 128px;
-  top: 1016px;
-  width: 360px;
-  height: 24px;
-  background: var(--lantern);
+/* 黑白剪紙物件：白色描邊＋錯位陰影，像剪下來貼上去 */
+.cl .cut {
+  filter: drop-shadow(6px 0 0 #ffffff) drop-shadow(-6px 0 0 #ffffff) drop-shadow(0 6px 0 #ffffff) drop-shadow(0 -6px 0 #ffffff) drop-shadow(12px 14px 0 rgba(17, 17, 17, 0.2));
 }
 
-section.dark.center::before {
-  left: 1400px;
-  top: 300px;
-  width: 440px;
-  height: 440px;
+/* 黑白照片：白邊＋陰影＋微微傾斜 */
+.cl .photo {
+  border: 12px solid #ffffff;
+  box-shadow: 14px 16px 0 rgba(17, 17, 17, 0.2);
+  filter: grayscale(1) contrast(1.1);
+  object-fit: cover;
 }
 
-section.dark.center::after {
-  left: 1660px;
-  top: 150px;
-  width: 180px;
-  height: 180px;
-  background: var(--lantern);
-}
-
-section.accent::before {
-  background: var(--lantern);
-}
-
-section.accent::after {
-  background: var(--coal);
+.pasted {
+  border: 12px solid #ffffff;
+  box-shadow: 14px 16px 0 rgba(17, 17, 17, 0.2);
 }
 
 /* ================= 示意圖 ================= */
@@ -675,6 +695,33 @@ section.accent::after {
   }
 }
 
+/* ================= 全部改成米色底（參考圖沒有深色頁）：舊的 dark／accent 類別沿用但改成淺色 ================= */
+section.dark,
+section.accent {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.dark .eyebrow,
+.accent .eyebrow { color: var(--ember); }
+
+.dark .lead,
+.accent .lead,
+.dark .small,
+.accent .small { color: var(--ink-soft); }
+
+.dark .big-num { color: var(--ember); }
+
+.dark .card {
+  background: var(--paper);
+  border-color: var(--paper);
+}
+
+.dark .card .body { color: var(--ink-soft); }
+.dark .card .num { color: var(--ember); }
+.dark table { color: var(--ink); }
+.dark .fig .sub { color: var(--ink-soft); }
+
 /* ===== 播放器 ===== */
 html, body { margin: 0; height: 100%; background: #111111; overflow: hidden; }
 #stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
@@ -698,12 +745,14 @@ body.show-notes #notes { display: block; }
 <body>
 <div id="stage"><div id="frame">
 <section id="cover" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1230px; top:150px; width:640px; height:640px;"></div><div class="ht r" style="left:1060px; top:780px; width:600px; height:300px;"></div><div class="ring" style="left:1090px; top:60px; width:840px; height:840px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="q-br b" style="left:0px; top:0px; width:150px; height:150px;"></div><div class="k" style="left:1846px; top:0px; width:34px; height:330px;"></div><img class="photo" src="assets/game-screenshot.png" alt="" style="left:1500px; top:120px; width:300px; height:615px; transform:rotate(5deg); filter:none;"><svg class="cut" style="left:1250px; top:250px; width:300px; height:300px; transform:rotate(-9deg);" viewBox="0 0 200 200"><path d="M44 34l44 26-34 30z" fill="#E98FA0"/><path d="M156 34l-44 26 34 30z" fill="#E98FA0"/><circle cx="100" cy="112" r="72" fill="#F6B8C4"/><path d="M34 132a72 72 0 0 0 132 0z" fill="#EFA3B2"/><ellipse cx="100" cy="130" rx="36" ry="26" fill="#E27C90"/><ellipse cx="88" cy="130" rx="6" ry="10" fill="#7A2E3C"/><ellipse cx="112" cy="130" rx="6" ry="10" fill="#7A2E3C"/><circle cx="72" cy="92" r="8" fill="#262626"/><circle cx="128" cy="92" r="8" fill="#262626"/></svg><svg class="cut" style="left:1290px; top:640px; width:380px; height:380px; transform:rotate(4deg);" viewBox="0 0 200 200"><g transform="rotate(-24 100 100)"><path d="M14 100h-10M186 100h10" stroke="#8A4A22" stroke-width="9" stroke-linecap="round"/><rect x="16" y="70" width="168" height="60" rx="30" fill="#C9733B"/><rect x="26" y="77" width="148" height="18" rx="9" fill="#E9A27A"/><path d="M62 72l-12 56M98 70l-12 60M134 70l-12 60" stroke="#5A2A12" stroke-width="8" stroke-linecap="round"/></g></svg></div><!--/cl-->
 <p class="eyebrow">CLAUDE WORKSHOP</p>
 <h1>一句話，<br>做出一個能玩的網頁</h1>
 <p class="lead">益之豬・Claude 入門工作坊<br>2026/11/19・講師 Zoe</p>
 
 </section>
 <section id="play" class="dark">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1300px; top:140px; width:620px; height:620px;"></div><div class="ht r" style="left:1180px; top:800px; width:560px; height:280px;"></div><div class="ring" style="left:1240px; top:80px; width:740px; height:740px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="q-br b" style="left:0px; top:0px; width:112px; height:112px;"></div><div class="k" style="left:0px; top:1010px; width:520px; height:26px;"></div></div><!--/cl-->
 <p class="eyebrow">WARM UP</p>
 <div class="row grow">
 <div class="grow" style="display:flex; flex-direction:column; gap:36px;">
@@ -714,11 +763,12 @@ body.show-notes #notes { display: block; }
 <p class="small">ladyzoe-learn.github.io<br>/sausage-game</p>
 </div>
 </div>
-<img src="assets/game-screenshot.png" alt="烤香腸大師遊戲畫面：烤架上有幾根香腸，上方顯示分數與剩餘秒數" style="width:340px; height:697px; object-fit:contain; border-radius:32px; border:6px solid #333333;">
+<img src="assets/game-screenshot.png" alt="烤香腸大師遊戲畫面：烤架上有幾根香腸，上方顯示分數與剩餘秒數" class="pasted" style="width:340px; height:697px; object-fit:contain; transform:rotate(3deg);">
 </div>
 
 </section>
 <section id="noCode">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">THE REVEAL</p>
 <h2>這個遊戲，我一行程式都沒寫</h2>
 <p class="prompt rise" style="--i:1">「幫我做一個夜市烤香腸的小遊戲，手機也能玩：點空位放香腸、點一下翻面，兩面烤好就出餐，烤焦扣分。」</p>
@@ -726,6 +776,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="agenda">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1650px; top:-200px; width:440px; height:440px;"></div><div class="ring" style="left:1596px; top:-254px; width:548px; height:548px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1826px; top:982px; width:56px; height:56px;"></div></div><!--/cl-->
 <p class="eyebrow">TODAY</p>
 <h2>今天的路線圖</h2>
 <div class="grid3" style="grid-template-columns:repeat(5, 1fr);">
@@ -747,6 +798,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="terms">
+<!--cl--><div class="cl" aria-hidden="true"><div class="y" style="left:1100px; top:44px; width:820px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:560px;"></div><div class="ht r" style="left:1480px; top:936px; width:380px; height:190px;"></div><div class="o b" style="left:40px; top:40px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">BASICS</p>
 <h2>AI、AI 助理、模型：一層包一層</h2>
 <div class="row" style="gap:48px; align-items:stretch;">
@@ -771,12 +823,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="s1" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht r" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o b" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(0deg);" viewBox="0 0 200 200"><g transform="rotate(-24 100 100)"><path d="M14 100h-10M186 100h10" stroke="#5E5E5E" stroke-width="9" stroke-linecap="round"/><rect x="16" y="70" width="168" height="60" rx="30" fill="#7A7A7A"/><rect x="26" y="77" width="148" height="18" rx="9" fill="#CFCFCF"/><path d="M62 72l-12 56M98 70l-12 60M134 70l-12 60" stroke="#262626" stroke-width="8" stroke-linecap="round"/></g></svg></div><!--/cl-->
 <p class="eyebrow">PART 1</p>
 <h1>AI 怎麼「讀」你的話</h1>
 <p class="lead">先搞懂 token，就知道為什麼額度會用完</p>
 
 </section>
 <section id="predict">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">HOW AI ANSWERS</p>
 <h2>AI 回答你，其實是在玩文字接龍</h2>
 <div class="chain rise" style="--i:1">
@@ -794,6 +848,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="token">
+<!--cl--><div class="cl" aria-hidden="true"><div class="hr y" style="left:0px; top:560px; width:120px; height:240px;"></div><div class="o r" style="left:1690px; top:860px; width:380px; height:380px;"></div><div class="k" style="left:1520px; top:70px; width:300px; height:14px;"></div><div class="o b" style="left:1820px; top:104px; width:60px; height:60px;"></div><div class="ring" style="left:1630px; top:800px; width:500px; height:500px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">TOKEN</p>
 <h2>AI 讀字，是一片一片讀的</h2>
 <svg class="rise" style="--i:1;" aria-label="一根香腸被切成六片" width="1664" height="170" viewBox="0 0 1664 170"><rect x="20" y="40" width="1624" height="96" rx="48" fill="#C9733B"/><rect x="40" y="48" width="1584" height="28" rx="14" fill="#E9A27A"/><path d="M200 24v130M470 24v130M760 24v130M960 24v130M1300 24v130" stroke="#EBE2D2" stroke-width="16" stroke-linecap="round"/></svg>
@@ -810,6 +865,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="tokenCost">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">TOKEN = 額度</p>
 <h2>這三樣，全部都算 token</h2>
 <div class="diagram">
@@ -829,6 +885,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="desk">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">CONTEXT WINDOW</p>
 <h2>AI 有一張工作桌，大小有限</h2>
 <div class="row" style="gap:48px;">
@@ -843,6 +900,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="saveTips">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">SAVE TOKENS</p>
 <h2>省額度的三個好習慣</h2>
 <div class="cards">
@@ -854,12 +912,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="s2" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht y" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o r" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(-8deg);" viewBox="0 0 200 200"><rect x="38" y="44" width="124" height="88" fill="#3A3A3A"/><rect x="47" y="53" width="106" height="70" fill="#CFCFCF"/><path d="M58 70h52M58 86h74M58 102h40" stroke="#5E5E5E" stroke-width="7"/><path d="M16 140h168l-14 22H30z" fill="#7A7A7A"/></svg></div><!--/cl-->
 <p class="eyebrow">PART 2</p>
 <h1>該用哪一個？</h1>
 <p class="lead">網頁版還是桌面版、Claude 還是 Codex、免費還是付費</p>
 
 </section>
 <section id="where">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">WHERE TO USE</p>
 <h2>去哪裡用 Claude？</h2>
 <div class="cards">
@@ -871,6 +931,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="whatCode">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path fill="#8A8A8A" fill-rule="evenodd" d="M60 64a36 36 0 1 1 0 72a36 36 0 1 1 0-72zm0 22a14 14 0 1 0 0 28a14 14 0 1 0 0-28z"/><rect x="92" y="91" width="92" height="18" fill="#8A8A8A"/><rect x="152" y="109" width="13" height="26" fill="#8A8A8A"/><rect x="171" y="109" width="13" height="18" fill="#8A8A8A"/></svg></div><!--/cl-->
 <p class="eyebrow">CLAUDE CODE</p>
 <h2>Claude Code：給它一間辦公室的鑰匙</h2>
 <div class="row" style="gap:64px;">
@@ -888,6 +949,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="localVsCloud">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M52 156a36 36 0 0 1-2-72 48 48 0 0 1 92 10 32 32 0 0 1 8 62z" fill="#CFCFCF"/><path d="M30 128a36 36 0 0 0 22 28h96a32 32 0 0 0 28-24z" fill="#B0B0B0"/></svg></div><!--/cl-->
 <p class="eyebrow">LOCAL VS CLOUD</p>
 <h2>多人共用一個帳號？開工選「本機」</h2>
 <div class="cards">
@@ -907,6 +969,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="chatVsAgent">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">ADVICE VS ACTION</p>
 <h2>同一句「幫我做個小遊戲」，誰在動手？</h2>
 <div class="panel rise" style="--i:1; display:flex; flex-direction:column; gap:36px;">
@@ -921,6 +984,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="codex">
+<!--cl--><div class="cl" aria-hidden="true"><div class="q-br b" style="left:0px; top:0px; width:112px; height:112px;"></div><div class="y" style="left:1848px; top:260px; width:44px; height:520px;"></div><div class="o r" style="left:1736px; top:906px; width:300px; height:300px;"></div><div class="ring" style="left:1680px; top:850px; width:412px; height:412px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">CLAUDE VS CODEX</p>
 <h2>同一類工具，不同家公司</h2>
 <div class="cards">
@@ -931,6 +995,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="plans">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">FREE VS PAID</p>
 <h2>免費版先試，卡住再升級</h2>
 <div class="cards">
@@ -941,12 +1006,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="s3f" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht b" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o y" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(10deg);" viewBox="0 0 200 200"><path d="M100 150c0 34 46 30 62 48" stroke="#262626" stroke-width="12" fill="none" stroke-linecap="round"/><rect x="78" y="26" width="13" height="56" fill="#CFCFCF"/><rect x="109" y="26" width="13" height="56" fill="#CFCFCF"/><rect x="62" y="78" width="76" height="78" rx="10" fill="#6E6E6E"/><rect x="62" y="78" width="76" height="22" fill="#9A9A9A"/></svg></div><!--/cl-->
 <p class="eyebrow">PART 3</p>
 <h1>Claude 還會什麼？</h1>
 <p class="lead">專案、排程、連接器（MCP）、API，一次搞懂</p>
 
 </section>
 <section id="featMap">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb b" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o y" style="left:1830px; top:980px; width:60px; height:60px;"></div></div><!--/cl-->
 <p class="eyebrow">FEATURE MAP</p>
 <h2>Claude 的功能地圖</h2>
 <div class="grid3" style="grid-template-columns:repeat(4, 1fr);">
@@ -962,6 +1029,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="projects">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">PROJECTS · SKILLS</p>
 <h2>讓它不用每次重新認識你</h2>
 <div class="cards">
@@ -985,6 +1053,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="mdVsSkill">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht r" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="b" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="b" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M100 58C74 42 44 40 18 48v110c26-8 56-6 82 10z" fill="#CFCFCF"/><path d="M100 58c26-16 56-18 82-10v110c-26-8-56-6-82 10z" fill="#B5B5B5"/><path d="M100 58v110" stroke="#5E5E5E" stroke-width="5"/><path d="M34 76c18-4 36-3 52 4M34 98c18-4 36-3 52 4M34 120c18-4 36-3 52 4M114 80c16-7 34-8 52-4M114 102c16-7 34-8 52-4M114 124c16-7 34-8 52-4" stroke="#7A7A7A" stroke-width="5" fill="none"/></svg></div><!--/cl-->
 <p class="eyebrow">MD · CLAUDE.MD · SKILL</p>
 <h2>md 檔、CLAUDE.md、Skill 差在哪？</h2>
 <div class="row" style="gap:40px; align-items:stretch;">
@@ -1007,6 +1076,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="schedule">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1650px; top:-200px; width:440px; height:440px;"></div><div class="ring" style="left:1596px; top:-254px; width:548px; height:548px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1826px; top:982px; width:56px; height:56px;"></div></div><!--/cl-->
 <p class="eyebrow">SCHEDULED TASKS</p>
 <h2>排程：時間到了，它自己開工</h2>
 <div class="diagram">
@@ -1035,6 +1105,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="connectors">
+<!--cl--><div class="cl" aria-hidden="true"><div class="r" style="left:1100px; top:44px; width:820px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:560px;"></div><div class="ht b" style="left:1480px; top:936px; width:380px; height:190px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M100 150c0 34 46 30 62 48" stroke="#262626" stroke-width="12" fill="none" stroke-linecap="round"/><rect x="78" y="26" width="13" height="56" fill="#CFCFCF"/><rect x="109" y="26" width="13" height="56" fill="#CFCFCF"/><rect x="62" y="78" width="76" height="78" rx="10" fill="#6E6E6E"/><rect x="62" y="78" width="76" height="22" fill="#9A9A9A"/></svg></div><!--/cl-->
 <p class="eyebrow">CONNECTORS · MCP</p>
 <h2>連接器（MCP）：讓 Claude 伸手拿資料</h2>
 <div style="position:relative; width:1664px; height:400px;">
@@ -1052,6 +1123,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="api">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">API</p>
 <h2>API：服務對外開的「點餐窗口」</h2>
 <div class="diagram">
@@ -1078,6 +1150,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="mcpVsApi">
+<!--cl--><div class="cl" aria-hidden="true"><div class="hr r" style="left:0px; top:560px; width:120px; height:240px;"></div><div class="o b" style="left:1690px; top:860px; width:380px; height:380px;"></div><div class="k" style="left:1520px; top:70px; width:300px; height:14px;"></div><div class="o y" style="left:1820px; top:104px; width:60px; height:60px;"></div><div class="ring" style="left:1630px; top:800px; width:500px; height:500px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">MCP VS API</p>
 <h2>API 像遙控器，MCP 像智慧音箱</h2>
 <div class="cards">
@@ -1100,6 +1173,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="mcpBenefit">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">情境：讓 AI 讀雲端硬碟裡的報價單，整理成一張表</p>
 <h2>同一件事，用 API 還是 MCP？對你差在哪</h2>
 <div class="panel rise" style="--i:1; display:flex; flex-direction:column; gap:28px;">
@@ -1116,6 +1190,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="toolbox">
+<!--cl--><div class="cl" aria-hidden="true"><div class="q-br y" style="left:0px; top:0px; width:112px; height:112px;"></div><div class="r" style="left:1848px; top:260px; width:44px; height:520px;"></div><div class="o b" style="left:1736px; top:906px; width:300px; height:300px;"></div><div class="ring" style="left:1680px; top:850px; width:412px; height:412px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">TOOLBOX</p>
 <h2>一張圖記住 Claude 的工具箱</h2>
 <div class="grid3">
@@ -1130,12 +1205,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="s4" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht b" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o r" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(-8deg);" viewBox="0 0 200 200"><path d="M24 34h152v100H90l-38 34v-34H24z" fill="#CFCFCF"/><path d="M24 112h152v22H90l-38 34v-34H24z" fill="#B5B5B5"/><circle cx="64" cy="84" r="11" fill="#262626"/><circle cx="100" cy="84" r="11" fill="#262626"/><circle cx="136" cy="84" r="11" fill="#262626"/></svg></div><!--/cl-->
 <p class="eyebrow">PART 4</p>
 <h1>開始用 AI 做你的事</h1>
 <p class="lead">怎麼跟它說話、在益之豬可以拿來做什麼</p>
 
 </section>
 <section id="howToAsk">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht y" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="r" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o b" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M24 34h152v100H90l-38 34v-34H24z" fill="#CFCFCF"/><path d="M24 112h152v22H90l-38 34v-34H24z" fill="#B5B5B5"/><circle cx="64" cy="84" r="11" fill="#262626"/><circle cx="100" cy="84" r="11" fill="#262626"/><circle cx="136" cy="84" r="11" fill="#262626"/></svg></div><!--/cl-->
 <p class="eyebrow">HOW TO ASK</p>
 <h2>跟 AI 說話的三個訣竅</h2>
 <div class="cards">
@@ -1150,6 +1227,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="useCases" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb r" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o b" style="left:1830px; top:980px; width:60px; height:60px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M44 34l44 26-34 30z" fill="#9A9A9A"/><path d="M156 34l-44 26 34 30z" fill="#9A9A9A"/><circle cx="100" cy="112" r="72" fill="#CFCFCF"/><path d="M34 132a72 72 0 0 0 132 0z" fill="#B5B5B5"/><ellipse cx="100" cy="130" rx="36" ry="26" fill="#8A8A8A"/><ellipse cx="88" cy="130" rx="6" ry="10" fill="#262626"/><ellipse cx="112" cy="130" rx="6" ry="10" fill="#262626"/><circle cx="72" cy="92" r="8" fill="#262626"/><circle cx="128" cy="92" r="8" fill="#262626"/></svg></div><!--/cl-->
 <p class="eyebrow">BACK TO WORK</p>
 <h2>回到你的工作，可以做什麼？</h2>
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px;">
@@ -1161,12 +1239,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="s3" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht r" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o y" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(-8deg);" viewBox="0 0 200 200"><circle cx="100" cy="100" r="74" fill="#CFCFCF"/><path d="M100 26a74 74 0 0 1 0 148z" fill="#B5B5B5"/><ellipse cx="100" cy="100" rx="32" ry="74" fill="none" stroke="#5E5E5E" stroke-width="6"/><path d="M26 100h148M100 26v148M40 62h120M40 138h120" stroke="#5E5E5E" stroke-width="6"/></svg></div><!--/cl-->
 <p class="eyebrow">PART 5 · ADVANCED</p>
 <h1>進階：把作品放上網</h1>
 <p class="lead">網頁、網址、Git、GitHub，最後現場部署給大家玩</p>
 
 </section>
 <section id="html">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1650px; top:-200px; width:440px; height:440px;"></div><div class="ring" style="left:1596px; top:-254px; width:548px; height:548px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1826px; top:982px; width:56px; height:56px;"></div></div><!--/cl-->
 <p class="eyebrow">WHAT IS A WEB PAGE</p>
 <h2>網頁，其實就是一個檔案</h2>
 <div class="diagram">
@@ -1189,6 +1269,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="url">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">WHAT IS A URL</p>
 <h2>網址，就是作品的地址</h2>
 <div class="panel rise" style="--i:1; display:flex; flex-direction:column; gap:28px;">
@@ -1215,6 +1296,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="problem">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht y" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="r" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o b" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><circle cx="100" cy="100" r="74" fill="#CFCFCF"/><path d="M100 26a74 74 0 0 1 0 148z" fill="#B5B5B5"/><ellipse cx="100" cy="100" rx="32" ry="74" fill="none" stroke="#5E5E5E" stroke-width="6"/><path d="M26 100h148M100 26v148M40 62h120M40 138h120" stroke="#5E5E5E" stroke-width="6"/></svg></div><!--/cl-->
 <p class="eyebrow">THE PROBLEM</p>
 <h2>做好了，但只有我看得到</h2>
 <div class="diagram">
@@ -1241,6 +1323,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="git">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb r" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o b" style="left:1830px; top:980px; width:60px; height:60px;"></div></div><!--/cl-->
 <p class="eyebrow">GIT</p>
 <h2>Git＝作品的存檔點</h2>
 <div class="tl rise" style="--i:1">
@@ -1256,6 +1339,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="gitLocal">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M22 54h58l14 18h84v100H22z" fill="#8A8A8A"/><path d="M22 84h156v88H22z" fill="#CFCFCF"/><path d="M22 84h156v14H22z" fill="#B5B5B5"/></svg></div><!--/cl-->
 <p class="eyebrow">GIT ON YOUR COMPUTER</p>
 <h2>Git 在你的電腦上，長這個樣子</h2>
 <div class="diagram">
@@ -1280,6 +1364,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="terminal">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">WHAT IS A TERMINAL</p>
 <h2>終端機：用打字跟電腦說話的視窗</h2>
 <div class="row rise" style="--i:1; gap:24px; align-items:stretch;">
@@ -1309,6 +1394,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="macVsWin">
+<!--cl--><div class="cl" aria-hidden="true"><div class="b" style="left:1100px; top:44px; width:820px; height:26px;"></div><div class="b" style="left:1866px; top:44px; width:26px; height:560px;"></div><div class="ht y" style="left:1480px; top:936px; width:380px; height:190px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">MAC VS WINDOWS</p>
 <h2>Mac 和 Windows 的終端機，差在哪？</h2>
 <table class="rise" style="--i:1; font-size:28px;">
@@ -1325,6 +1411,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="gitUndo">
+<!--cl--><div class="cl" aria-hidden="true"><div class="hr b" style="left:0px; top:560px; width:120px; height:240px;"></div><div class="o y" style="left:1690px; top:860px; width:380px; height:380px;"></div><div class="k" style="left:1520px; top:70px; width:300px; height:14px;"></div><div class="o r" style="left:1820px; top:104px; width:60px; height:60px;"></div><div class="ring" style="left:1630px; top:800px; width:500px; height:500px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">UNDO</p>
 <h2>改壞了？回到任何一個存檔點</h2>
 <div class="tl rise" style="--i:1">
@@ -1343,6 +1430,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="gitWords">
+<!--cl--><div class="cl" aria-hidden="true"><div class="q-br b" style="left:0px; top:0px; width:112px; height:112px;"></div><div class="y" style="left:1848px; top:260px; width:44px; height:520px;"></div><div class="o r" style="left:1736px; top:906px; width:300px; height:300px;"></div><div class="ring" style="left:1680px; top:850px; width:412px; height:412px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">GIT WORDS</p>
 <h2>螢幕上會看到的 Git 名詞</h2>
 <table style="font-size:30px;">
@@ -1358,6 +1446,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="gitVsGithub">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><rect x="64" y="40" width="54" height="26" fill="#3A3A3A"/><rect x="20" y="60" width="160" height="106" rx="10" fill="#3A3A3A"/><circle cx="100" cy="113" r="42" fill="#CFCFCF"/><circle cx="100" cy="113" r="29" fill="#262626"/><circle cx="90" cy="103" r="8" fill="#EDEDED"/><rect x="142" y="72" width="24" height="13" fill="#CFCFCF"/></svg></div><!--/cl-->
 <p class="eyebrow">GIT VS GITHUB</p>
 <h2>Git 和 GitHub，名字像，但是兩回事</h2>
 <div class="diagram rise" style="--i:1; justify-content:center; gap:120px;">
@@ -1376,6 +1465,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="localRemote">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">LOCAL ⇄ REMOTE</p>
 <h2>電腦和 GitHub 之間：push 上傳、pull 下載</h2>
 <div class="diagram">
@@ -1403,6 +1493,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="github">
+<!--cl--><div class="cl" aria-hidden="true"><div class="hb b" style="left:1430px; top:0px; width:380px; height:190px;"></div><div class="y" style="left:1580px; top:1012px; width:340px; height:28px;"></div><div class="o r" style="left:56px; top:958px; width:92px; height:92px;"></div><div class="ring" style="left:1360px; top:-170px; width:520px; height:520px; border-color:transparent transparent #111111 transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">GITHUB PAGES</p>
 <h2>GitHub Pages：把倉庫變成一個網址</h2>
 <div class="diagram">
@@ -1427,6 +1518,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="ghWords">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o b" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="y" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o r" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">GITHUB WORDS</p>
 <h2>GitHub 上會看到的設定</h2>
 <table>
@@ -1440,6 +1532,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="twoWays">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht r" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="b" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="b" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">TWO WAYS</p>
 <h2>上線有兩種方式，看你要放多久</h2>
 <table>
@@ -1453,6 +1546,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="pagesLimits">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">WHAT PAGES CAN'T DO</p>
 <h2>GitHub Pages 是展示櫃，不是店面後台</h2>
 <div class="row" style="gap:32px; align-items:stretch;">
@@ -1474,6 +1568,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="pagesBackend">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1650px; top:-200px; width:440px; height:440px;"></div><div class="ring" style="left:1596px; top:-254px; width:548px; height:548px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1826px; top:982px; width:56px; height:56px;"></div></div><!--/cl-->
 <p class="eyebrow">FRONT END vs BACK END</p>
 <h2>為什麼不能放後端？Pages 只管得到「線的左邊」</h2>
 <div class="row" style="gap:0; align-items:stretch;">
@@ -1498,6 +1593,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="prep">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht r" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="b" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="b" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">BEFORE UPLOAD</p>
 <h2>上傳前，要準備三樣東西</h2>
 <div class="cards">
@@ -1509,6 +1605,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="ghLogin">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb b" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o y" style="left:1830px; top:980px; width:60px; height:60px;"></div></div><!--/cl-->
 <p class="eyebrow">GITHUB LOGIN</p>
 <h2>GitHub 登入：今天我們真的卡住的三個地方</h2>
 <div class="diagram rise" style="--i:1;">
@@ -1528,6 +1625,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="deploy3">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht r" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="b" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="b" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">DEPLOY IN 3 STEPS</p>
 <h2>從檔案到網址：在 GitHub 網站上點 3 步</h2>
 <div class="diagram">
@@ -1558,6 +1656,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="steps">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb b" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o y" style="left:1830px; top:980px; width:60px; height:60px;"></div></div><!--/cl-->
 <p class="eyebrow">THE AI WAY</p>
 <h2>或者，跟 Claude Code 講一句話</h2>
 <p class="prompt rise" style="--i:1">「幫我把這個資料夾上傳到 GitHub，開啟 GitHub Pages，然後給我網址。」</p>
@@ -1569,6 +1668,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="stepByStep">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="b" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o y" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">BEHIND THE SCENES</p>
 <h2>你說一句話，它在背後做了六件事</h2>
 <div class="grid3">
@@ -1582,6 +1682,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="kkdayCase">
+<!--cl--><div class="cl" aria-hidden="true"><div class="r" style="left:1100px; top:44px; width:820px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:560px;"></div><div class="ht b" style="left:1480px; top:936px; width:380px; height:190px;"></div><div class="o y" style="left:40px; top:40px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><path d="M64 94V68a36 36 0 0 1 72 0v26" stroke="#7A7A7A" stroke-width="18" fill="none"/><rect x="42" y="88" width="116" height="92" rx="8" fill="#3A3A3A"/><circle cx="100" cy="124" r="13" fill="#CFCFCF"/><rect x="94" y="130" width="12" height="26" fill="#CFCFCF"/></svg></div><!--/cl-->
 <p class="eyebrow">CASE · 2026/11</p>
 <h2>真實案例：KKday 夥伴網站「業績裸奔」</h2>
 <div class="diagram rise" style="--i:1;">
@@ -1599,6 +1700,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="kkdayLesson">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht y" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="r" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o b" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">LESSONS</p>
 <h2>從這個案例，記住三件事</h2>
 <div class="cards">
@@ -1610,6 +1712,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="liveEdit">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><g transform="rotate(-24 100 100)"><path d="M14 100h-10M186 100h10" stroke="#5E5E5E" stroke-width="9" stroke-linecap="round"/><rect x="16" y="70" width="168" height="60" rx="30" fill="#7A7A7A"/><rect x="26" y="77" width="148" height="18" rx="9" fill="#CFCFCF"/><path d="M62 72l-12 56M98 70l-12 60M134 70l-12 60" stroke="#262626" stroke-width="8" stroke-linecap="round"/></g></svg></div><!--/cl-->
 <p class="eyebrow">LIVE DEMO</p>
 <h2>現場改給你看</h2>
 <div class="flow">
@@ -1625,20 +1728,22 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="scan" class="accent center">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1240px; top:160px; width:640px; height:640px;"></div><div class="hb y" style="left:1160px; top:0px; width:360px; height:180px;"></div><div class="ring" style="left:1190px; top:110px; width:740px; height:740px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="ht b" style="left:120px; top:900px; width:400px; height:200px;"></div><svg class="cut" style="left:140px; top:760px; width:300px; height:300px; transform:rotate(-14deg);" viewBox="0 0 200 200"><g transform="rotate(-24 100 100)"><path d="M14 100h-10M186 100h10" stroke="#5E5E5E" stroke-width="9" stroke-linecap="round"/><rect x="16" y="70" width="168" height="60" rx="30" fill="#7A7A7A"/><rect x="26" y="77" width="148" height="18" rx="9" fill="#CFCFCF"/><path d="M62 72l-12 56M98 70l-12 60M134 70l-12 60" stroke="#262626" stroke-width="8" stroke-linecap="round"/></g></svg></div><!--/cl-->
 <div class="row">
 <div class="grow" style="display:flex; flex-direction:column; gap:36px;">
 <p class="eyebrow">YOUR TURN</p>
 <h1>掃碼開烤</h1>
-<p class="lead" style="color:#EBE2D2;">剛剛改的招牌，你的手機上看到了嗎？</p>
+<p class="lead">剛剛改的招牌，你的手機上看到了嗎？</p>
 </div>
 <div style="display:flex; flex-direction:column; align-items:center; gap:16px;">
 <img src="assets/sausage-qr.png" alt="烤香腸大師遊戲網址的 QR code" style="width:420px; height:420px; object-fit:contain;">
-<p class="small" style="color:#EBE2D2;">ladyzoe-learn.github.io/sausage-game</p>
+<p class="small" style="background:#FAF6EE; color:#111111; padding:6px 16px;">ladyzoe-learn.github.io/sausage-game</p>
 </div>
 </div>
 
 </section>
 <section id="commonMistakes">
+<!--cl--><div class="cl" aria-hidden="true"><div class="hr y" style="left:0px; top:560px; width:120px; height:240px;"></div><div class="o r" style="left:1690px; top:860px; width:380px; height:380px;"></div><div class="k" style="left:1520px; top:70px; width:300px; height:14px;"></div><div class="o b" style="left:1820px; top:104px; width:60px; height:60px;"></div><div class="ring" style="left:1630px; top:800px; width:500px; height:500px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">COMMON MISTAKES</p>
 <h2>大家最常犯的 5 個錯</h2>
 <div class="grid3">
@@ -1652,6 +1757,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="homework">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div><svg class="cut" style="left:1612px; top:22px; width:230px; height:230px; transform:rotate(-7deg);" viewBox="0 0 200 200"><rect x="38" y="44" width="124" height="88" fill="#3A3A3A"/><rect x="47" y="53" width="106" height="70" fill="#CFCFCF"/><path d="M58 70h52M58 86h74M58 102h40" stroke="#5E5E5E" stroke-width="7"/><path d="M16 140h168l-14 22H30z" fill="#7A7A7A"/></svg></div><!--/cl-->
 <p class="eyebrow">TRY IT TONIGHT</p>
 <h2>今天回家，試這三步</h2>
 <div class="cards">
@@ -1663,6 +1769,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="recap" class="dark">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht y" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="r" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="r" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o b" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">TAKEAWAYS</p>
 <h2>今天帶走三件事</h2>
 <div class="cards">
@@ -1673,12 +1780,14 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="appendix" class="dark center" data-transition="fade">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o r" style="left:1250px; top:170px; width:620px; height:620px;"></div><div class="ht y" style="left:1130px; top:760px; width:560px; height:280px;"></div><div class="ring" style="left:1150px; top:70px; width:820px; height:820px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="k" style="left:1836px; top:0px; width:36px; height:300px;"></div><div class="o b" style="left:1196px; top:120px; width:76px; height:76px;"></div><svg class="cut" style="left:1340px; top:230px; width:440px; height:440px; transform:rotate(-8deg);" viewBox="0 0 200 200"><path d="M100 58C74 42 44 40 18 48v110c26-8 56-6 82 10z" fill="#CFCFCF"/><path d="M100 58c26-16 56-18 82-10v110c-26-8-56-6-82 10z" fill="#B5B5B5"/><path d="M100 58v110" stroke="#5E5E5E" stroke-width="5"/><path d="M34 76c18-4 36-3 52 4M34 98c18-4 36-3 52 4M34 120c18-4 36-3 52 4M114 80c16-7 34-8 52-4M114 102c16-7 34-8 52-4M114 124c16-7 34-8 52-4" stroke="#7A7A7A" stroke-width="5" fill="none"/></svg></div><!--/cl-->
 <p class="eyebrow">APPENDIX</p>
 <h1>附錄：回家照著做</h1>
 <p class="lead">手動部署三步的畫面，和今天的名詞總表</p>
 
 </section>
 <section id="deployStep1">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:-300px; top:560px; width:700px; height:700px;"></div><div class="hb r" style="left:1460px; top:0px; width:420px; height:210px;"></div><div class="ring" style="left:-380px; top:480px; width:860px; height:860px; border-color:#111111 #111111 transparent transparent; transform:rotate(0deg);"></div><div class="o b" style="left:1830px; top:980px; width:60px; height:60px;"></div></div><!--/cl-->
 <p class="eyebrow">STEP 1 · NEW REPOSITORY</p>
 <h2>第 1 步：建一個倉庫</h2>
 <div class="row" style="gap:56px; align-items:flex-start;">
@@ -1698,6 +1807,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="deployStep2">
+<!--cl--><div class="cl" aria-hidden="true"><div class="o y" style="left:1380px; top:-300px; width:760px; height:760px;"></div><div class="ring" style="left:1300px; top:-380px; width:920px; height:920px; border-color:transparent transparent #111111 #111111; transform:rotate(0deg);"></div><div class="r" style="left:0px; top:1004px; width:560px; height:28px;"></div><div class="o b" style="left:1820px; top:980px; width:64px; height:64px;"></div></div><!--/cl-->
 <p class="eyebrow">STEP 2 · UPLOAD</p>
 <h2>第 2 步：把 index.html 拖進去</h2>
 <div class="row" style="gap:56px; align-items:flex-start;">
@@ -1718,6 +1828,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="deployStep3">
+<!--cl--><div class="cl" aria-hidden="true"><div class="ht b" style="left:1060px; top:690px; width:780px; height:390px;"></div><div class="y" style="left:1200px; top:44px; width:720px; height:26px;"></div><div class="y" style="left:1866px; top:44px; width:26px; height:420px;"></div><div class="o r" style="left:40px; top:40px; width:64px; height:64px;"></div><div class="ring" style="left:980px; top:620px; width:940px; height:940px; border-color:#111111 transparent transparent transparent; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">STEP 3 · PAGES</p>
 <h2>第 3 步：打開 Pages，拿到網址</h2>
 <div class="row" style="gap:56px; align-items:flex-start;">
@@ -1736,6 +1847,7 @@ body.show-notes #notes { display: block; }
 
 </section>
 <section id="glossary">
+<!--cl--><div class="cl" aria-hidden="true"><div class="q-br b" style="left:0px; top:0px; width:112px; height:112px;"></div><div class="y" style="left:1848px; top:260px; width:44px; height:520px;"></div><div class="o r" style="left:1736px; top:906px; width:300px; height:300px;"></div><div class="ring" style="left:1680px; top:850px; width:412px; height:412px; border-color:#111111 transparent transparent #111111; transform:rotate(0deg);"></div></div><!--/cl-->
 <p class="eyebrow">GLOSSARY</p>
 <h2>今天的名詞，一次對照</h2>
 <div class="cards" style="gap:28px;">
